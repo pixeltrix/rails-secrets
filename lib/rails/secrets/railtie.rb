@@ -1,0 +1,37 @@
+module Rails
+  module Secrets
+    module InstanceMethods
+      def secrets
+        @secrets ||= ActiveSupport::OrderedOptions.new.tap do |secrets|
+          yaml = config.paths["config/secrets"].first
+
+          if File.exist?(yaml)
+            require "erb"
+            all_secrets = YAML.load(ERB.new(IO.read(yaml)).result) || {}
+            env_secrets = all_secrets[::Rails.env]
+            secrets.merge!(env_secrets.symbolize_keys) if env_secrets
+          end
+        end
+      end
+
+      def secrets=(secrets)
+        @secrets = secrets
+      end
+    end
+
+    class Railtie < ::Rails::Railtie
+      initializer 'rails.secrets' do |app|
+        app.paths.add "config/secrets", with: "config/secrets.yml"
+        app.extend(InstanceMethods)
+
+        ActiveSupport.on_load(:after_initialize) do
+          if app.secrets.secret_key_base.blank?
+            raise "Missing `secret_key_base` for '#{Rails.env}' environment, set this value in `config/secrets.yml`"
+          else
+            app.config.secret_key_base = app.secrets.secret_key_base
+          end
+        end
+      end
+    end
+  end
+end
