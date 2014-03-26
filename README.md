@@ -22,9 +22,13 @@ Add this gem to your Gemfile, remove `config/initializers/secret_token.rb` and c
 
 ## Changelog
 
+### 1.0.1
+
+* Include instance methods before initialization begins so that it's available in all initializers
+
 ### 1.0.0
 
-Initial version.
+* Initial version.
 
 ## License (MIT)
 

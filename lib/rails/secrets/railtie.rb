@@ -20,16 +20,16 @@ module Rails
     end
 
     class Railtie < ::Rails::Railtie
-      initializer 'rails.secrets' do |app|
+      config.before_initialize do |app|
         app.paths.add "config/secrets", with: "config/secrets.yml"
         app.extend(InstanceMethods)
+      end
 
-        ActiveSupport.on_load(:after_initialize) do
-          if app.secrets.secret_key_base.blank?
-            raise "Missing `secret_key_base` for '#{Rails.env}' environment, set this value in `config/secrets.yml`"
-          else
-            app.config.secret_key_base = app.secrets.secret_key_base
-          end
+      config.after_initialize do |app|
+        if app.secrets.secret_key_base.blank?
+          raise "Missing `secret_key_base` for '#{Rails.env}' environment, set this value in `config/secrets.yml`"
+        else
+          app.config.secret_key_base = app.secrets.secret_key_base
         end
       end
     end
