@@ -33,4 +33,6 @@ Dummy::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  config.test_value = Rails.application.secrets.secret_key_base
 end
