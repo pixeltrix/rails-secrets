@@ -20,7 +20,7 @@ module Rails
     end
 
     class Railtie < ::Rails::Railtie
-      config.before_initialize do |app|
+      config.before_configuration do |app|
         app.paths.add "config/secrets", with: "config/secrets.yml"
         app.extend(InstanceMethods)
       end

@@ -26,4 +26,7 @@ Dummy::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # Test whether secrets can be read in a configuration context
+  config.secret_environment_config = Rails.application.secrets.secret_key_base
 end

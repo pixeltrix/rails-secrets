@@ -77,4 +77,7 @@ Dummy::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # Test whether secrets can be read in a configuration context
+  config.secret_environment_config = Rails.application.secrets.secret_key_base
 end
