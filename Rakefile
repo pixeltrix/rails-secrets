@@ -10,3 +10,11 @@ Rake::TestTask.new do |t|
   t.pattern = "test/**/*_test.rb"
   t.warning = true
 end
+
+task "test:all" do
+  gemfile = File.expand_path("../Gemfile", __FILE__)
+
+  ["rails-3.2", "rails-4.0"].each do |variant|
+    system({"BUNDLE_GEMFILE" => "#{gemfile}.#{variant}"}, "bundle", "exec", "rake", "test")
+  end
+end
