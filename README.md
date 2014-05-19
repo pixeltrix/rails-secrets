@@ -22,6 +22,12 @@ Add this gem to your Gemfile, remove `config/initializers/secret_token.rb` and c
 
 ## Changelog
 
+### 1.0.2
+
+* Add support for Rails 3.2.x
+
+* Include instance methods before configuration begins so that it's available in environment configuration
+
 ### 1.0.1
 
 * Include instance methods before initialization begins so that it's available in all initializers
