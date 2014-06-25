@@ -1,6 +1,4 @@
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path('../dummy/config/environment', __FILE__)
-require 'minitest/autorun'
+require 'test_helper'
 
 class RailsSecretsTest < ActiveSupport::TestCase
 
