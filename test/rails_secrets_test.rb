@@ -13,7 +13,7 @@ class RailsSecretsTest < ActiveSupport::TestCase
   end
 
   test "config.secret_key_base is copied from secrets.secret_key_base" do
-    assert_equal app.secrets.secret_key_base, app.config.secret_key_base
+    assert_equal app.secrets.secret_key_base, secret_key_base
   end
 
   private
@@ -22,4 +22,11 @@ class RailsSecretsTest < ActiveSupport::TestCase
     Rails.application
   end
 
+  def secret_key_base
+    if Rails::VERSION::MAJOR < 4
+      app.config.secret_token
+    else
+      app.config.secret_key_base
+    end
+  end
 end
