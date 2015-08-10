@@ -29,7 +29,11 @@ module Rails
         if app.secrets.secret_key_base.blank?
           raise "Missing `secret_key_base` for '#{Rails.env}' environment, set this value in `config/secrets.yml`"
         else
-          app.config.secret_key_base = app.secrets.secret_key_base
+          if Rails::VERSION::MAJOR < 4
+            app.config.secret_token = app.secrets.secret_key_base
+          else
+            app.config.secret_key_base = app.secrets.secret_key_base
+          end
         end
       end
     end
